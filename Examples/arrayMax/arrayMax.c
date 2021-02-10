@@ -15,18 +15,43 @@ int arrayMax(int* arr, int size) {
     int result = arr[0];
     int i = 0;
 
+    for(int n=0; n<i; n++){ //Never enters
+        __CPROVER_assert(result>=arr[n], "loop invariant: pre");
+    }
     while (i < size) {
-
+        for(int n=0; n<i; n++){
+        __CPROVER_assert(result>=arr[n], "loop invariant: at");
+        }
         if (arr[i] > result) 
             result = arr[i];
 
         i++;
     }
+    for(int n=0; n<i; n++){
+        __CPROVER_assert(result>=arr[n], "loop invariant: post");
+    }
 
+    //Postcondition Start
+    int exists = 0;
     for(int n = 0; n < size; n++){
+        if(arr[n] == result)
+            exists = 1;
         __CPROVER_assert(result >= arr[n], "Postcondition: Result greater than"); 
     }
+    __CPROVER_assert(exists==1, "Postcondition: Result exists in array"); 
+    //Postcondition End
+
     return result;
 }
 
-//cbmc arrMax.c --bounds-check --pointer-check 
+//cbmc arrayMax.c --bounds-check --pointer-check 
+
+
+/*
+Ting der ikke tjekkes, i.f.t. frama-c:
+    \assigns nothing
+
+    
+/Reflections
+    Giver loop invarianter overhovedet mening?
+/*

@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <assert.h>
-#include <math.h>
 
 int arrayMax(int* arr, int size);
 
@@ -50,8 +49,10 @@ int arrayMax(int* arr, int size) {
 /*
 Ting der ikke tjekkes, i.f.t. frama-c:
     \assigns nothing
+    loop variant
 
     
 /Reflections
     Giver loop invarianter overhovedet mening?
+    Vi er rimelig sikre på at loop varianter er ligegyldige (i og med man bruger bounded model checking)
 /*

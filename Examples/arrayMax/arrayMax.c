@@ -4,7 +4,7 @@
 int arrayMax(int* arr, int size);
 
 int main(int argc, char** argv){
-    int arr[10] = {1,2,3,4,5,6,7,8,9,10};
+    int arr[] = {1,2,3,4,5,6,7,8,9,10};
     arrayMax(arr, 10);
 }
 
@@ -55,4 +55,4 @@ Ting der ikke tjekkes, i.f.t. frama-c:
 /Reflections
     Giver loop invarianter overhovedet mening?
     Vi er rimelig sikre på at loop varianter er ligegyldige (i og med man bruger bounded model checking)
-/*
+*/

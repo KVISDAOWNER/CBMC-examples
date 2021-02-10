@@ -44,7 +44,7 @@ int arrayMax(int* arr, int size) {
     return result;
 }
 
-//cbmc arrayMax.c --bounds-check --pointer-check 
+//Run Command: cbmc arrayMax.c --bounds-check --pointer-check 
 
 
 /*

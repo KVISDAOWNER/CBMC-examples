@@ -3,12 +3,13 @@
 #include <stdint.h>
 
 void stringCopy(char* dest, const char* src) ;
+void stringCopy1(char* dest, const char* src) ;
 
 int main(int argc, char** argv){
     char src[] = "luder";
     char dest[6];
     //stringCopy(dest, src);
-    stringCopy(dest,src);
+    stringCopy1(dest,src);
 }
 
 
@@ -40,7 +41,7 @@ void stringCopy(char* dest, const char* src) {
         loop assigns i, srccopy, destcopy, *(dest + (0 .. srcStrlen - 1));
     */
 
-    while (i < 10) {
+    while (i < srcStrlen) {
        *destcopy = *srccopy;
         i = i + 1;
         srccopy = srccopy + 1;

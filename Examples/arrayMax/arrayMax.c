@@ -10,8 +10,6 @@ int main(int argc, char** argv){
     unsigned short int size = nondet_ushortint();
     __CPROVER_assume(5 > size && size > 0);
     int arr[size];
-    __CPROVER_printf("Print shit: ");
-    __CPROVER_printf(__CPROVER_OBJECT_SIZE(arr));
     arrayMax(arr, size);
 }
 
@@ -51,7 +49,7 @@ int arrayMax(int* arr, int size) {
     return result;
 }
 
-//Run Command: cbmc arrayMax.c --bounds-check --pointer-check 
+//Run Command: cbmc arrayMax.c --bounds-check --pointer-check --unwind 5 --unwinding-assertions
 
 
 /*

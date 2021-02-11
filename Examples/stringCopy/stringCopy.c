@@ -4,29 +4,21 @@
 
 void stringCopy(char* dest, const char* src) ;
 void stringCopy1(char* dest, const char* src) ;
+int strlen2(const char* str) ;
 
 int main(int argc, char** argv){
-    char src[] = "luder";
-    char dest[6];
-    //stringCopy(dest, src);
-    stringCopy1(dest,src);
+    char dest[] = "12345";
+    char src[] = "hallo";
+    stringCopy(dest,src);
 }
 
-
-    /*@ requires validDest: valid_string(dest);
-    requires validReadSrc: valid_read_string(src);
-    requires destLargest: strlen(dest) >= strlen(src);
-    requires noDestOverflow: SIZE_MAX > strlen(dest);
-    requires separatedStrings: \separated(src + (0 .. strlen(src)), dest + (0 .. strlen(dest))) ;
-    requires nullCharEnd: src[strlen(src)] == '\0';
-
-    assigns *(dest + (0 .. strlen(src)));
-
-    ensures copied: \forall integer k; 0 <= k <= strlen(src) ==> dest[k] == src[k];
-    ensures stillValidDest: *(dest + strlen(src)) == '\0';
-    */
     
 void stringCopy(char* dest, const char* src) {
+    __CPROVER_precondition(strlen(dest) >= strlen(src), "Precondition: dest big enough");
+    __CPROVER_precondition(SIZE_MAX > strlen(dest), "Precondition: dest not overflow");
+    __CPROVER_precondition(__CPROVER_POINTER_OBJECT(dest) != __CPROVER_POINTER_OBJECT(src), "Precondition: dest big enough");
+    __CPROVER_precondition(src[strlen(src)] == '\0', "Precondition: src \0 terminated");
+
     int i = 0;
     int srcStrlen = strlen(src);
     int destStrlen = strlen(dest);
@@ -34,21 +26,22 @@ void stringCopy(char* dest, const char* src) {
     char* destcopy = &(dest[0]);
     char* srccopy = &(src[0]);
 
-    /*@ loop invariant validRange: 0 <= i <= srcStrlen <= destStrlen ;
-        loop invariant intermediateCopied: \forall integer k; 0 <= k < i ==> dest[k] == src[k];
-        loop invariant srcPos: src + i == srccopy ;
-        loop invariant destPos: dest + i == destcopy ;
-        loop assigns i, srccopy, destcopy, *(dest + (0 .. srcStrlen - 1));
-    */
-
     while (i < srcStrlen) {
        *destcopy = *srccopy;
         i = i + 1;
         srccopy = srccopy + 1;
         destcopy = destcopy + 1;
     }
-    //*destcopy = *srccopy;
+    *destcopy = *srccopy;
+
+
+    //Postcondition
+    for(int n=0; n<=strlen(src); n++){
+        __CPROVER_assert(src[n]==dest[n], "Postcondition: copy correct");
+    }
 }
+
+
 
 void stringCopy1(char* dest, const char* src) {
 
@@ -63,5 +56,5 @@ void stringCopy1(char* dest, const char* src) {
 
 /*
     Reflections
-        Lortet kører uendeligt
+        Loop invariant osv. virker ikke relevant
 */

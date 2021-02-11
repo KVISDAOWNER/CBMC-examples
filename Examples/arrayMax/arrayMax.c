@@ -30,7 +30,7 @@ int arrayMax(int* arr, int size) {
         __CPROVER_assert(result>=arr[n], "loop invariant: post");
     }
 
-    //Postcondition Start
+    //Postcondition
     int exists = 0;
     for(int n = 0; n < size; n++){
         if(arr[n] == result)
@@ -38,7 +38,7 @@ int arrayMax(int* arr, int size) {
         __CPROVER_assert(result >= arr[n], "Postcondition: Result greater than"); 
     }
     __CPROVER_assert(exists==1, "Postcondition: Result exists in array"); 
-    //Postcondition End
+    
 
     return result;
 }

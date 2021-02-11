@@ -1,25 +1,33 @@
 #include <stdio.h>
 #include <assert.h>
+#include <stdint.h> //SIZE_MAX from here
 
 int arrayMax(int* arr, int size);
 
 int main(int argc, char** argv){
-    int arr[] = {1,2,3,4,5,6,7,8,9,10};
-    arrayMax(arr, 10);
+
+    unsigned short int nondet_ushortint();
+    unsigned short int size = nondet_ushortint();
+    __CPROVER_assume(5 > size && size > 0);
+    int arr[size];
+    __CPROVER_printf("Print shit: ");
+    __CPROVER_printf(__CPROVER_OBJECT_SIZE(arr));
+    arrayMax(arr, size);
 }
 
 
 int arrayMax(int* arr, int size) {
-    __CPROVER_precondition(size > 0, "Precondition: size positive");
+    __CPROVER_precondition(size > 0, "Precondition: size is above 0");
+
     int result = arr[0];
     int i = 0;
 
     for(int n=0; n<i; n++){ //Never enters
-        __CPROVER_assert(result>=arr[n], "loop invariant: pre");
+        //__CPROVER_assert(result>=arr[n], "loop invariant: pre");
     }
     while (i < size) {
         for(int n=0; n<i; n++){
-        __CPROVER_assert(result>=arr[n], "loop invariant: at");
+        //__CPROVER_assert(result>=arr[n], "loop invariant: at");
         }
         if (arr[i] > result) 
             result = arr[i];
@@ -27,7 +35,7 @@ int arrayMax(int* arr, int size) {
         i++;
     }
     for(int n=0; n<i; n++){
-        __CPROVER_assert(result>=arr[n], "loop invariant: post");
+        //__CPROVER_assert(result>=arr[n], "loop invariant: post");
     }
 
     //Postcondition

@@ -16,7 +16,7 @@ int main(int argc, char** argv){
 void stringCopy(char* dest, const char* src) {
     __CPROVER_precondition(strlen(dest) >= strlen(src), "Precondition: dest big enough");
     __CPROVER_precondition(SIZE_MAX > strlen(dest), "Precondition: dest not overflow");
-    __CPROVER_precondition(__CPROVER_POINTER_OBJECT(dest) != __CPROVER_POINTER_OBJECT(src), "Precondition: dest big enough");
+    __CPROVER_precondition(__CPROVER_POINTER_OBJECT(dest) != __CPROVER_POINTER_OBJECT(src), "Precondition: point to different objects");
     __CPROVER_precondition(src[strlen(src)] == '\0', "Precondition: src \0 terminated");
 
     int i = 0;

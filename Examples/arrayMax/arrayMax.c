@@ -10,7 +10,7 @@ int main(int argc, char** argv){
 
 
 int arrayMax(int* arr, int size) {
-    __CPROVER_precondition(size > 0, "Precondition: Size positive");
+    __CPROVER_precondition(size > 0, "Precondition: size positive");
     int result = arr[0];
     int i = 0;
 
@@ -35,10 +35,10 @@ int arrayMax(int* arr, int size) {
     for(int n = 0; n < size; n++){
         if(arr[n] == result)
             exists = 1;
-        __CPROVER_assert(result >= arr[n], "Postcondition: Result greater than"); 
+        __CPROVER_assert(result >= arr[n], "Postcondition: result greater than"); 
     }
-    __CPROVER_assert(exists==1, "Postcondition: Result exists in array"); 
-    
+    __CPROVER_assert(exists==1, "Postcondition: result exists in array"); 
+
 
     return result;
 }

@@ -33,10 +33,10 @@ int stringCompare(const char* s1, const char* s2) {
     }
 
     //Postcondition
-    bool same = true;
+    int same = 1;
     for(int n=0; n<=strlen(s1); n++){
         if(s1[n]!=s2[n])
-            same = false;
+            same = 0;
     }
     if(same)
         __CPROVER_assert(*s1 - *s2 == 0, "Postcondition: same then == 0");

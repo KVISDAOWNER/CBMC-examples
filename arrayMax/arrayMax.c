@@ -1,17 +1,4 @@
-#include <stdio.h>
-#include <assert.h>
 #include <stdint.h> //SIZE_MAX from here
-
-int arrayMax(int* arr, int size);
-
-int main(int argc, char** argv){
-
-    unsigned short int nondet_ushortint();
-    unsigned short int size = nondet_ushortint();
-    __CPROVER_assume(5 > size && size > 0);
-    int arr[size];
-    arrayMax(arr, size);
-}
 
 
 int arrayMax(int* arr, int size) {
@@ -20,21 +7,12 @@ int arrayMax(int* arr, int size) {
     int result = arr[0];
     int i = 0;
 
-    for(int n=0; n<i; n++){ //Never enters
-        //__CPROVER_assert(result>=arr[n], "loop invariant: pre");
-    }
     while (i < size) {
-        for(int n=0; n<i; n++){
-        //__CPROVER_assert(result>=arr[n], "loop invariant: at");
-        }
         if (arr[i] > result) 
             result = arr[i];
-
         i++;
     }
-    for(int n=0; n<i; n++){
-        //__CPROVER_assert(result>=arr[n], "loop invariant: post");
-    }
+
 
     //Postcondition
     int exists = 0;
@@ -49,7 +27,15 @@ int arrayMax(int* arr, int size) {
     return result;
 }
 
-//Run Command: cbmc arrayMax.c --bounds-check --pointer-check --unwind 5 --unwinding-assertions
+int PROOF_HARNESS(){
+    unsigned short int size;
+    __CPROVER_assume(5 > size && size > 0);
+    int arr[size];
+    arrayMax(arr, size);
+}
+
+
+//Run Command: cbmc arrayMax.c --function PROOF_HARNESS --bounds-check --pointer-check --unwind 5 --unwinding-assertions
 
 
 /*

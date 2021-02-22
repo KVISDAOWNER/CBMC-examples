@@ -27,7 +27,7 @@ int arrayMax(int* arr, int size) {
     return result;
 }
 
-int PROOF_HARNESS(){
+void PROOF_HARNESS(){
     unsigned short int size;
     __CPROVER_assume(5 > size && size > 0);
     int arr[size];

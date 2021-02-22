@@ -30,7 +30,7 @@ void stringCopy(char* dest, const char* src) {
     }
 }
 
-int PROOF_HARNESS(){
+void PROOF_HARNESS(){
     unsigned short int size_dest;
     __CPROVER_assume(5 > size_dest && size_dest > 0); 
 

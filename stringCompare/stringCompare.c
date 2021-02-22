@@ -40,7 +40,7 @@ int stringCompare(const char* s1, const char* s2) {
 }
 
 
-int PROOF_HARNESS(){
+void PROOF_HARNESS(){
     unsigned short int size_str1, size_str2;
 
     __CPROVER_assume(5 > size_str1 && size_str1 > 0);

@@ -35,7 +35,7 @@ int PROOF_HARNESS(){
 }
 
 
-//Run Command: cbmc arrayMax.c --function PROOF_HARNESS --bounds-check --pointer-check --unwind 5 --unwinding-assertions
+//Run Command: cbmc arrayMax.c --function PROOF_HARNESS --bounds-check --pointer-check --signed-overflow-check --unsigned-overflow-check --unwind 5 --unwinding-assertions
 
 
 /*

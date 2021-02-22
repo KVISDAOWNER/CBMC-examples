@@ -1,9 +1,10 @@
 #include <stdint.h> //SIZE_MAX from here
 
+int HELP_exists_in_arr(const int* arr, const unsigned int size, const int e);
+int HELP_element_greater_than_or_eq(const int* arr, const unsigned int size, const int e);
 
-int arrayMax(int* arr, int size) {
-    __CPROVER_precondition(size > 0, "Precondition: size is above 0");
-
+int arrayMax(int* arr, const unsigned int size) {
+    __CPROVER_precondition(5 > size && size > 0, "Precondition: assumes 5 > size > 0");  
     int result = arr[0];
     int i = 0;
 
@@ -13,28 +14,39 @@ int arrayMax(int* arr, int size) {
         i++;
     }
 
-
-    //Postcondition
-    int exists = 0;
-    for(int n = 0; n < size; n++){
-        if(arr[n] == result)
-            exists = 1;
-        __CPROVER_assert(result >= arr[n], "Postcondition: result greater than"); 
-    }
-    __CPROVER_assert(exists==1, "Postcondition: result exists in array"); 
-
+    __CPROVER_postcondition(HELP_exists_in_arr(arr, size, result), "Postcondition: result exists in array"); 
+    __CPROVER_postcondition(HELP_element_greater_than_or_eq(arr, size, result), "Postcondition: result greater than"); 
 
     return result;
 }
 
 void PROOF_HARNESS(){
-    unsigned short int size;
-    __CPROVER_assume(5 > size && size > 0);
+    unsigned int size;
     int arr[size];
-    arrayMax(arr, size);
+
+    __CPROVER_assume(5 > size && size > 0);
+
+    int max = arrayMax(arr, size);
+    __CPROVER_postcondition(HELP_exists_in_arr(arr, size, max), "Postcondition: returned max exists in array"); 
+    __CPROVER_postcondition(HELP_element_greater_than_or_eq(arr, size, max), "Postcondition: returned max greater than"); 
+
 }
 
+int HELP_exists_in_arr(const int* arr, const unsigned int size, const int e){
+    for(int n = 0; n < size; n++){
+        if(arr[n] == e)
+            return 1;
+    }
+    return 0;
+}
 
+int HELP_element_greater_than_or_eq(const int* arr, const unsigned int size, const int e){
+    for(int n = 0; n < size; n++){
+        if(e < arr[n])
+            return 0;
+    }
+    return 1;
+}
 //Run Command: cbmc arrayMax.c --function PROOF_HARNESS --bounds-check --pointer-check --signed-overflow-check --unsigned-overflow-check --unwind 5 --unwinding-assertions
 
 

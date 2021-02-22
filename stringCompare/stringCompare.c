@@ -55,4 +55,4 @@ int PROOF_HARNESS(){
     stringCompare(str1,str2);
 }
 
-//Run Command: cbmc stringCompare.c --function PROOF_HARNESS --bounds-check --pointer-check --unwind 5 --unwinding-assertions --trace
+//Run Command: cbmc stringCompare.c --function PROOF_HARNESS --bounds-check --pointer-check --signed-overflow-check --unsigned-overflow-check --unwind 5 --unwinding-assertions --trace
